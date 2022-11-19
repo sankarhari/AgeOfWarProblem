@@ -1,17 +1,17 @@
 <?php
 
-interface SoldierInterface {
+interface ISoldier {
 	public function setName(string $soldier_name);
 	public function setClassType(string $soldier_type);
 	public function setAdvantageOver(array $advantage_over);
 	public function getFullDetails(): string;
 }
 
-class Soldier implements SoldierInterface
+class Soldier implements ISoldier
 {
-    protected $name;
-    protected $class_type;
-    protected $advantage_over;
+    public $name;
+    public $class_type;
+    public $advantage_over;
 
     function __construct($name, $class_type, array $advantage_over)
     {

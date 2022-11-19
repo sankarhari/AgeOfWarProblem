@@ -1,27 +1,46 @@
 <?php
-require "SoldierFactory.php";
+require "Soldier.php";
+require "Platoon.php";
 
-$advantage_data = array(
-	"Militia" => array("Spearmen","LightCavalry"),
-	"Spearmen" => array("LightCavalry","HeavyCavalry"),
-	"LightCavalry" => array("FootArcher","CavalryArcher"),
-	"HeavyCavalry" => array("Militia","FootArcher","LightCavalry"),
-	"CavalryArcher" => array("Spearmen","HeavyCavalry"),
-	"FootArcher" => array("Militia","CavalryArcher")
-);
+class Main
+{
+	protected $advantage_data = array(
+		"Militia" => array("Spearmen","LightCavalry"),
+		"Spearmen" => array("LightCavalry","HeavyCavalry"),
+		"LightCavalry" => array("FootArcher","CavalryArcher"),
+		"HeavyCavalry" => array("Militia","FootArcher","LightCavalry"),
+		"CavalryArcher" => array("Spearmen","HeavyCavalry"),
+		"FootArcher" => array("Militia","CavalryArcher")
+	);
 
-$soldier_factory = new SoldierFactory($advantage_data);
-$soldier1 = $soldier_factory->createSoldier("Spearmen");
-echo $soldier1->getFullDetails();
+	public function processInput($input): array
+	{
 
+		$platoon_list =array();
 
-$soldier2 = $soldier_factory->createSoldier("HeavyCavalry");
-echo $soldier2->getFullDetails();
+		foreach (explode(";",$input) as $platoon)
+		{
+			$each_platoon = explode("#", $platoon);
+			$advantages = 
+			$soldier = new Soldier($each_platoon[0].rand(10,100), $each_platoon[0], $this->advantage_data[$each_platoon[0]]);
+			$platoon_list[] = new Platoon($soldier, $each_platoon[1]);
+		}
 
-$input1 = readline("Input Platoon 1 Details: ");
-$input2 = readline("Input Platoon 2 Details: ");
-echo $input1."\n";
-echo $input2."\n";
+		return $platoon_list;
+	}
+}
+
+$player1_input = "Spearmen#10;Militia#30;FootArcher#20;LightCavalry#1000;HeavyCavalry#120";
+$player2_input = "Militia#10;Spearmen#10;FootArcher#1000;LightCavalry#120;CavalryArcher#100";
+
+$main = new Main();
+$player1 = new Player("Player1", $main->processInput($player1_input));
+$player2 = new Player("Player2", $main->processInput($player2_input));
+
+$player1->startBattle($player2);
+
+print_r($player1->winning_sequence[0]);
+// echo sizeof($player1->winning_sequence);
 
 ?>
 

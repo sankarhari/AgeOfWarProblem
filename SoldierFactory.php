@@ -1,11 +1,11 @@
 <?php
 require 'Soldier.php';
 
-interface SoldierFactoryInterface {
+interface ISoldierFactory {
 	public function createSoldier(string $class_type);
 }
 
-class SoldierFactory implements SoldierFactoryInterface {
+class SoldierFactory implements ISoldierFactory {
 	
 	private $advantage_over_data = array();
 	
