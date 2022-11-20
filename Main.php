@@ -28,6 +28,16 @@ class Main
 
 		return $platoon_list;
 	}
+
+	public function platoonToString(array $platoons): string
+	{
+		$platoon_list = array();
+		foreach ($platoons as $platoon)
+		{ 
+			$platoon_list[] = $platoon->soldier->class_type."#". $platoon->count;
+		}
+		return implode(";",$platoon_list);
+	}
 }
 
 $player1_input = "Spearmen#10;Militia#30;FootArcher#20;LightCavalry#1000;HeavyCavalry#120";
@@ -39,8 +49,13 @@ $player2 = new Player("Player2", $main->processInput($player2_input));
 
 $player1->startBattle($player2);
 
-print_r($player1->winning_sequence[0]);
-// echo sizeof($player1->winning_sequence);
-
+echo "Winning Sequeces:\n";
+foreach ($player1->getWinningSequence(10) as $each_seq)
+{
+	// foreach($)
+	echo $main->platoonToString($each_seq)."\n";
+	// echo json_encode($each_seq);
+	// echo "\n\n";
+}
 ?>
 
