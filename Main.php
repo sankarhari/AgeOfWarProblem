@@ -52,10 +52,7 @@ $player1->startBattle($player2);
 echo "Winning Sequeces:\n";
 foreach ($player1->getWinningSequence(10) as $each_seq)
 {
-	// foreach($)
 	echo $main->platoonToString($each_seq)."\n";
-	// echo json_encode($each_seq);
-	// echo "\n\n";
 }
 ?>
 
